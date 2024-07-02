@@ -252,8 +252,12 @@ class OpenLLAMAPEFTModel(nn.Module):
             return_tensors="pt", add_special_tokens=False).to(self.device)
         p_before_embeds = self.llama_model.model.model.embed_tokens(p_before_tokens.input_ids).expand(batch_size, -1, -1) # bsz x s1 x embed_dim
         text = ['</Img> ' + prompt + '\n### Assistant:' for prompt in prompts]
-        p_after_tokens = self.llama_tokenizer(text, add_special_tokens=False, return_tensors='pt').to(self.device)
-        p_after_embeds = self.llama_model.model.model.embed_tokens(p_after_tokens.input_ids).expand(batch_size, -1, -1) # bsz x s1 x embed_dim
+        p_after_tokens = self.llama_tokenizer(text, 
+                                          add_special_tokens=False, 
+                                          return_tensors='pt', 
+                                          padding=True, 
+                                          truncation=True).to(self.device)
+        p_after_embeds = self.llama_model.model.model.embed_tokens(p_after_tokens.input_ids).expand(batch_size, -1, -1) 
         bos = torch.ones([batch_size, 1],
                          dtype=p_before_tokens.input_ids.dtype,
                          device=p_before_tokens.input_ids.device) * self.llama_tokenizer.bos_token_id # bsz x 1
