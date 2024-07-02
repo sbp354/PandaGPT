@@ -238,7 +238,7 @@ class OpenLLAMAPEFTModel(nn.Module):
         return feature_embeds
 
     def prepare_generation_embedding(self, inputs):
-        prompt = inputs['prompt']
+        prompts = inputs['prompts']
         if len(inputs['modality_embeds']) == 1:
             feature_embeds = inputs['modality_embeds'][0]
         else:
@@ -246,11 +246,12 @@ class OpenLLAMAPEFTModel(nn.Module):
             inputs['modality_embeds'].append(feature_embeds)
 
         batch_size = feature_embeds.shape[0]
+        print("batch_size", batch_size)
         p_before = PROMPT_START
         p_before_tokens = self.llama_tokenizer(p_before, 
             return_tensors="pt", add_special_tokens=False).to(self.device)
         p_before_embeds = self.llama_model.model.model.embed_tokens(p_before_tokens.input_ids).expand(batch_size, -1, -1) # bsz x s1 x embed_dim
-        text = '</Img> ' + prompt + '\n### Assistant:'
+        text = ['</Img> ' + prompt + '\n### Assistant:' for prompt in prompts]
         p_after_tokens = self.llama_tokenizer(text, add_special_tokens=False, return_tensors='pt').to(self.device)
         p_after_embeds = self.llama_model.model.model.embed_tokens(p_after_tokens.input_ids).expand(batch_size, -1, -1) # bsz x s1 x embed_dim
         bos = torch.ones([batch_size, 1],
@@ -268,7 +269,7 @@ class OpenLLAMAPEFTModel(nn.Module):
                 'video_paths': optional
                 'thermal_paths': optional
                 'mode': generation mode,
-                'prompt': human input prompt,
+                'prompts': human input prompt,
                 'max_tgt_len': generation length,
                 'top_p': top_p,
                 'temperature': temperature
