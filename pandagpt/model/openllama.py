@@ -95,7 +95,7 @@ class OpenLLAMAPEFTModel(nn.Module):
         peft_config = LoraConfig(
             task_type=TaskType.CAUSAL_LM, 
             inference_mode=False,
-            r=lora_config.lora_r,
+            r=lora_config.r,
             lora_alpha=lora_config.lora_alpha, 
             lora_dropout=lora_config.lora_dropout,
             target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj']
