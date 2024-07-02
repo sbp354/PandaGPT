@@ -97,7 +97,7 @@ class OpenLLAMAPEFTModel(nn.Module):
             inference_mode=False, 
             r=lora_config.lora_rank,
             lora_alpha=lora_config.lora_alpha, 
-            lora_dropout=lora_config.loralora_dropout,
+            lora_dropout=lora_config.lora_dropout,
             target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj']
         )
 
