@@ -1,0 +1,70 @@
+# See https://setuptools.pypa.io/en/latest/userguide/pyproject_config.html
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pandagpt"
+description = "PandaGPT"
+requires-python = "==3.10.12"
+readme = "README.md"
+dynamic = ["version"]
+dependencies = [
+"timm==0.6.7",
+"deepspeed==0.9.2",
+"data",
+"einops==0.6.1",
+"ftfy==6.1.1",
+"iopath==0.1.10",
+"ipdb==0.13.13",
+"numpy==1.24.3",
+"peft==0.3.0",
+"Pillow==9.5.0",
+"PyYAML==6.0",
+"regex==2022.10.31",
+"torchvision==0.14.1",
+"torchaudio==0.13.1",
+"pytorchvideo",
+"fvcore",
+"decord==0.6.0",
+"tqdm==4.64.1",
+"transformers==4.29.1"
+]
+
+[tool.setuptools]
+packages = ["pandagpt"]
+
+[tool.ruff]
+target-version = "py310"
+extend-include = ["*.ipynb"]
+extend-exclude = ["submodules"]
+
+# Line length 120 to makes it easier to have multiple files open side-by-side.
+line-length = 120
+
+[tool.ruff.lint]
+# Check that imports are sorted
+extend-select = ["I"]
+
+[tool.ruff.lint.isort]
+# wandb is a package, but sometimes also a folder that gets created.
+# We tell ruff to treat it always as a third-party package to make import
+# sorting consistent.
+known-third-party = ["wandb"]
+
+[tool.black]
+line-length = 120
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
