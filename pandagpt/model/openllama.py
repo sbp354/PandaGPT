@@ -1,4 +1,4 @@
-from header import *
+from pandagpt.header import *
 import torch.nn.functional as F
 from .ImageBind import *
 from .ImageBind import data
