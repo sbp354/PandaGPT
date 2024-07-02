@@ -73,13 +73,13 @@ class OpenLLAMAPEFTModel(nn.Module):
 
     '''LoRA for LLaMa model'''
 
-    def __init__(self, **args):
+    def __init__(self, model_config, lora_config):
         super(OpenLLAMAPEFTModel, self).__init__()
-        self.args = args
-        imagebind_ckpt_path = args['imagebind_ckpt_path']
-        vicuna_ckpt_path = args['vicuna_ckpt_path']
-        max_tgt_len = args['max_tgt_len']
-        stage = args['stage']
+        #self.args = args
+        imagebind_ckpt_path = model_config.imagebind_ckpt_path
+        vicuna_ckpt_path = model_config.vicuna_ckpt_path
+        max_tgt_len = model_config.max_tgt_len
+        stage = model_config.stage
 
         print (f'Initializing visual encoder from {imagebind_ckpt_path} ...')
         self.visual_encoder, self.visual_hidden_size = \
@@ -95,9 +95,9 @@ class OpenLLAMAPEFTModel(nn.Module):
         peft_config = LoraConfig(
             task_type=TaskType.CAUSAL_LM, 
             inference_mode=False, 
-            r=self.args['lora_r'], 
-            lora_alpha=self.args['lora_alpha'], 
-            lora_dropout=self.args['lora_dropout'],
+            r=lora_config.lora_rank,
+            lora_alpha=lora_config.lora_alpha, 
+            lora_dropout=lora_config.loralora_dropout,
             target_modules=['q_proj', 'k_proj', 'v_proj', 'o_proj']
         )
 
