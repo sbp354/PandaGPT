@@ -1,10 +1,10 @@
-from header import *
+from pandagpt.header import *
 
 class DeepSpeedAgent:
     
     def __init__(self, model, args):
         super(DeepSpeedAgent, self).__init__()
-        self.args = args
+        self.args = args 
         self.model = model
         if args['stage'] == 2:
             self.load_stage_1_parameters(args["delta_ckpt_path"])
