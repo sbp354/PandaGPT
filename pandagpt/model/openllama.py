@@ -83,7 +83,7 @@ class OpenLLAMAPEFTModel(nn.Module):
 
         print (f'Initializing visual encoder from {imagebind_ckpt_path} ...')
         self.visual_encoder, self.visual_hidden_size = \
-        imagebind_model.imagebind_huge(pretrained=True, store_path=imagebind_ckpt_path)
+        imagebind_model.imagebind_huge(pretrained=True)#, store_path=imagebind_ckpt_path)
         # free vision encoder
         for name, param in self.visual_encoder.named_parameters():
             param.requires_grad = False
