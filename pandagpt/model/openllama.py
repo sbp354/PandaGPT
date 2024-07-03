@@ -244,7 +244,7 @@ class OpenLLAMAPEFTModel(nn.Module):
         else:
             feature_embeds = self.extract_multimodal_feature(inputs)
             inputs['modality_embeds'].append(feature_embeds)
-
+        print(feature_embeds.shape)
         batch_size = feature_embeds.shape[0]
         print("batch_size", batch_size)
         p_before = PROMPT_START

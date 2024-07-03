@@ -152,7 +152,7 @@ def load_and_transform_audio_data(
     clip_sampler = ConstantClipsPerVideoSampler(
         clip_duration=clip_duration, clips_per_video=clips_per_video
     )
-
+    print("AUDIO_PATHS", audio_paths)
     for audio_path in audio_paths:
         waveform, sr = torchaudio.load(audio_path)
         if sample_rate != sr:
@@ -179,8 +179,9 @@ def load_and_transform_audio_data(
         all_clips = [normalize(ac).to(device) for ac in all_clips]
 
         all_clips = torch.stack(all_clips, dim=0)
+        print(all_clips.shape)
         audio_outputs.append(all_clips)
-
+    print(len(audio_outputs))
     return torch.stack(audio_outputs, dim=0)
 
 
