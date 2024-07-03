@@ -181,8 +181,6 @@ def load_and_transform_audio_data(
         all_clips = torch.stack(all_clips, dim=0)
         print(all_clips.shape)
         audio_outputs.append(all_clips)
-    print(len(audio_outputs))
-    print(audio_outputs[0].shape)
     x = torch.stack(audio_outputs, dim=0)
     print(x.shape)
     return torch.stack(audio_outputs, dim=0)

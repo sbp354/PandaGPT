@@ -135,8 +135,12 @@ class OpenLLAMAPEFTModel(nn.Module):
         with torch.no_grad():
             embeddings = self.visual_encoder(inputs)
             audio_embeds = embeddings[ModalityType.AUDIO] # bsz x 1024
+        print("embeddings", embeddings.shape)
+        print("audio_embeds", audio_embeds.shape)
         inputs_llama = self.llama_proj(audio_embeds).unsqueeze(1) # bsz x 1 x llama_size
+        print("inputs_llama", inputs_llama.shape)
         atts_llama = torch.ones(inputs_llama.size()[:-1], dtype=torch.long).to(self.device) # bsz x 1
+        print("atts_llama", atts_llama.shape)
         return inputs_llama, atts_llama
 
     def encode_thermal(self, thermal_paths):
@@ -226,6 +230,7 @@ class OpenLLAMAPEFTModel(nn.Module):
             features.append(image_embeds)
         if inputs['audio_paths']:
             audio_embeds, _ = self.encode_audio(inputs['audio_paths'])
+            print("audio_embeds", audio_embeds.shape)
             features.append(audio_embeds)
         if inputs['video_paths']:
             video_embeds, _ = self.encode_video(inputs['video_paths'])
