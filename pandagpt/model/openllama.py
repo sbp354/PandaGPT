@@ -223,28 +223,29 @@ class OpenLLAMAPEFTModel(nn.Module):
         gen_acc = valid_tokens.sum().item() / valid_mask.sum().item()
         return loss, gen_acc
 
-    def extract_multimodal_feature(self, inputs):
-        features = []
-        if inputs['image_paths']:
-            image_embeds, _ = self.encode_image(inputs['image_paths'])
-            features.append(image_embeds)
+    def extract_audio_feature(self, inputs):
+        # features = []
+        # if inputs['image_paths']:
+        #     image_embeds, _ = self.encode_image(inputs['image_paths'])
+        #     features.append(image_embeds)
         if inputs['audio_paths']:
             audio_embeds, _ = self.encode_audio(inputs['audio_paths'])
             print("audio_embeds", audio_embeds.shape)
-            features.append(audio_embeds)
-        if inputs['video_paths']:
-            video_embeds, _ = self.encode_video(inputs['video_paths'])
-            features.append(video_embeds)
-        if inputs['thermal_paths']:
-            thermal_embeds, _ = self.encode_thermal(inputs['thermal_paths'])
-            features.append(thermal_embeds)
+            return audio_embeds
+        # if inputs['video_paths']:
+        #     video_embeds, _ = self.encode_video(inputs['video_paths'])
+        #     features.append(video_embeds)
+        # if inputs['thermal_paths']:
+        #     thermal_embeds, _ = self.encode_thermal(inputs['thermal_paths'])
+        #     features.append(thermal_embeds)
 
-        feature_embeds = torch.cat(features).sum(dim=0).unsqueeze(0)
-        return feature_embeds
+        # feature_embeds = torch.cat(features).sum(dim=0).unsqueeze(0)
+        # return feature_embeds
 
     def prepare_generation_embedding(self, inputs):
         prompts = inputs['prompts']
         if len(inputs['modality_embeds']) == 1:
+            print("modality embeds len 1")
             feature_embeds = inputs['modality_embeds'][0]
         else:
             feature_embeds = self.extract_multimodal_feature(inputs)
