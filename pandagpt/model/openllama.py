@@ -248,7 +248,7 @@ class OpenLLAMAPEFTModel(nn.Module):
             print("modality embeds len 1")
             feature_embeds = inputs['modality_embeds'][0]
         else:
-            feature_embeds = self.extract_multimodal_feature(inputs)
+            feature_embeds = self.extract_audio_feature(inputs)
             inputs['modality_embeds'].append(feature_embeds)
         print(feature_embeds.shape)
         batch_size = feature_embeds.shape[0]
