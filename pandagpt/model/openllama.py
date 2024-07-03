@@ -135,7 +135,7 @@ class OpenLLAMAPEFTModel(nn.Module):
         with torch.no_grad():
             embeddings = self.visual_encoder(inputs)
             audio_embeds = embeddings[ModalityType.AUDIO] # bsz x 1024
-        print("embeddings", embeddings.shape)
+        print("embeddings", embeddings.keys())
         print("audio_embeds", audio_embeds.shape)
         inputs_llama = self.llama_proj(audio_embeds).unsqueeze(1) # bsz x 1 x llama_size
         print("inputs_llama", inputs_llama.shape)
