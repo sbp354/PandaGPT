@@ -299,7 +299,7 @@ class OpenLLAMAPEFTModel(nn.Module):
             stopping_criteria=stopping_criteria,
         )
         print(outputs)
-        print(self.llama_tokenizer.decode(outputs), skip_special_tokens=True)
+        print(self.llama_tokenizer.decode(outputs, skip_special_tokens=True))
         output_text = self.llama_tokenizer.decode(outputs[0][:-2], skip_special_tokens=True)
         return output_text
 
