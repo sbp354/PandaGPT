@@ -68,7 +68,7 @@ def process_batch_instance(tokenizer, batch_of_conversations, max_tgt_len):
     assert attention_mask.size() == input_ids.size()
     return input_ids, target_ids, attention_mask.long()
 
-PROMPT_START = '### Human: <Img>'
+PROMPT_START = '### Human: <Audio>'
 class OpenLLAMAPEFTModel(nn.Module):
 
     '''LoRA for LLaMa model'''
