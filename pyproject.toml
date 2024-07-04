@@ -10,24 +10,37 @@ requires-python = "==3.10.12"
 readme = "README.md"
 dynamic = ["version"]
 dependencies = [
-"timm==0.6.7",
-"deepspeed==0.9.2",
+"aiohttp",
+"anthropic==0.25.8",
 "data",
+"decord==0.6.0",
+"deepspeed==0.9.2",
 "einops==0.6.1",
 "ftfy==6.1.1",
+"fvcore",
+"gitpython", #almj
 "iopath==0.1.10",
 "ipdb==0.13.13",
+"jsonlines", #almj
+"lark", #almj
+"librosa",
+"matplotlib", #almj
 "numpy==1.24.3",
+"openai", #almj
+"pandas", #almj
 "peft==0.3.0",
 "Pillow==9.5.0",
+"pydantic", #almj
+"python-git", #almj
+"pytorchvideo",
 "PyYAML==6.0",
 "regex==2022.10.31",
+"sentencepiece",
+"termcolor", #almj
+"tiktoken", #almj
 "torchvision==0.14.1",
 "torchaudio==0.13.1",
-"pytorchvideo",
-"fvcore",
-"decord==0.6.0",
-"sentencepiece",
+"timm==0.6.7",
 "tqdm==4.64.1",
 "transformers==4.29.1"
 ]
