@@ -298,8 +298,11 @@ class OpenLLAMAPEFTModel(nn.Module):
             use_cache=True,
             stopping_criteria=stopping_criteria,
         )
-        print(outputs)
-        print(self.llama_tokenizer.batch_decode(outputs, skip_special_tokens=True))
-        output_text = self.llama_tokenizer.batch_decode(outputs[0][:-2], skip_special_tokens=True)
-        return output_text
+        # print(outputs)
+        # print(self.llama_tokenizer.batch_decode(outputs, skip_special_tokens=True))
+        processed_outputs = []
+        for output in outputs:
+            text = self.llama_tokenizer.batch_decode(output[:-2], skip_special_tokens=True)
+            processed_outputs.append(text)
+        return processed_outputs
 
